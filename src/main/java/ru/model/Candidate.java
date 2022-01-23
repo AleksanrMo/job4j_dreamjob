@@ -1,5 +1,6 @@
 package ru.model;
 
+import javax.servlet.http.HttpServlet;
 import java.util.Objects;
 
 public class Candidate {
