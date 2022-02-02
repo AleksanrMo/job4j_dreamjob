@@ -24,7 +24,7 @@ public class UploadServlet extends HttpServlet {
             images.add(name.getName());
         }
         req.setAttribute("images", images);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/photoUpload.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/PhotoUpload.jsp");
         dispatcher.forward(req, resp);
     }
 
