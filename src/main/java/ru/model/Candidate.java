@@ -33,6 +33,10 @@ public class Candidate {
         this.photoName = photoName;
     }
 
+    public String getPhotoName() {
+        return photoName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -43,11 +43,14 @@
                         <tr>
                             <td><c:out value="${candidate.name}"/></td>
                             <td class="center-align">
-
-                                        <img src="<c:url value='/candidate/photo?name=${image}'/>" width="100px" height="100px"/>
+                                <c:if test="${not empty candidate.photoName}">
+                                    <a href="<c:url value='/photo?name=${candidate.photoName}'/>">
+                                        <img src="<c:url value='/photo?name=${candidate.photoName}'/>" width="100px" height="100px"/>
+                                    </a>
+                                </c:if>
                             </td>
                             <td class="right-align">
-                                <a href='<c:url value="/candidate/PhotoUpload.jsp?id=${candidate.id}"/>'>
+                                <a href='<c:url value="/candidate/PhotoUpload.jsp?id=${candidate.photoName}"/>'>
                                     <button>edit</button>
                                 </a>
                                 <a href='<c:url value="/candidate/delete?id=${candidate.id}"/>'>

@@ -62,4 +62,8 @@ public class Store {
         return candidates.values();
     }
 
+    public boolean deleteCandidate(int id) {
+       return candidates.remove(id) != null;
+    }
+
 }
