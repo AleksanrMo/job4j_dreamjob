@@ -1,8 +1,8 @@
 <!DOCTYPE web-app PUBLIC
-        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
-        "http://java.sun.com/dtd/web-app_2_3.dtd" >
+  "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
-<web-app>
+  <web-app>
   <display-name>Archetype Created Web Application</display-name>
   <servlet>
     <servlet-name>PostServlet</servlet-name>
@@ -16,7 +16,18 @@
     <servlet-name>IndexServlet</servlet-name>
     <servlet-class>ru.servlet.IndexServlet</servlet-class>
   </servlet>
-
+  <servlet>
+    <servlet-name>DownloadServlet</servlet-name>
+    <servlet-class>ru.servlet.DownloadServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>CandidatePhotoServlet</servlet-name>
+    <servlet-class>ru.servlet.CandidatePhotoServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>CandidateDeleteServlet</servlet-name>
+    <servlet-class>ru.servlet.CandidateDeleteServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>PostServlet</servlet-name>
     <url-pattern>/posts.do</url-pattern>
@@ -29,5 +40,20 @@
     <servlet-name>IndexServlet</servlet-name>
     <url-pattern>/index.do</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>DownloadServlet</servlet-name>
+    <url-pattern>/download</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>CandidatePhotoServlet</servlet-name>
+    <url-pattern>/photo</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>CandidateDeleteServlet</servlet-name>
+    <url-pattern>/candidate/delete</url-pattern>
+  </servlet-mapping>
+
+
 </web-app>
 
