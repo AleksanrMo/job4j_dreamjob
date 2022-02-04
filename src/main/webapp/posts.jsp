@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="ru.model.Post" %>
-<%@ page import="ru.store.Store" %>
+<%@ page import="ru.store.MemStore" %>
 <%@ page import="java.util.Collection" %>
 <!doctype html>
 <html lang="en">

@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page import="ru.model.Post" %>
-<%@ page import="ru.store.Store" %>
+<%@ page import="ru.store.MemStore" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -35,6 +35,9 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<%=request.getContextPath()%>/candidate/edit.jsp">Добавить кандидата</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/upload">Скачать файл</a>
             </li>
         </ul>
     </div>
