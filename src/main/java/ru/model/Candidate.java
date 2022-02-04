@@ -1,10 +1,8 @@
 package ru.model;
 
-import javax.servlet.http.HttpServlet;
 import java.util.Objects;
 
 public class Candidate {
-    private String photoName;
     private int id;
     private String name;
 
@@ -29,13 +27,6 @@ public class Candidate {
         this.name = name;
     }
 
-    public void setPhotoName(String photoName) {
-        this.photoName = photoName;
-    }
-
-    public String getPhotoName() {
-        return photoName;
-    }
 
     @Override
     public boolean equals(Object o) {

@@ -42,15 +42,13 @@
                     <c:forEach var="candidate" items="${candidates}">
                         <tr>
                             <td><c:out value="${candidate.name}"/></td>
-                            <td class="center-align">
-                                <c:if test="${not empty candidate.photoName}">
-                                    <a href="<c:url value='/photo?name=${candidate.photoName}'/>">
-                                        <img src="<c:url value='/photo?name=${candidate.photoName}'/>" width="100px" height="100px"/>
-                                    </a>
-                                </c:if>
+                            <td>
+                                <img src="<c:url value='/download?name=${candidate.id}.jpg'/>" width="100px" height="100px"/>
+
+
                             </td>
-                            <td class="right-align">
-                                <a href='<c:url value="/candidate/PhotoUpload.jsp?id=${candidate.photoName}"/>'>
+                            <td>
+                                <a href='<c:url value="/candidate/PhotoUpload.jsp?id=${candidate.id}"/>'>
                                     <button>edit</button>
                                 </a>
                                 <a href='<c:url value="/candidate/delete?id=${candidate.id}"/>'>

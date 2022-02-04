@@ -5,6 +5,7 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import ru.model.Candidate;
+import ru.model.Path;
 import ru.store.Store;
 
 import javax.servlet.ServletContext;
@@ -21,7 +22,8 @@ import java.util.List;
 public class CandidatePhotoServlet extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
         DiskFileItemFactory factory = new DiskFileItemFactory();
         ServletContext servletContext = this.getServletConfig().getServletContext();
         File repository = (File) servletContext.getAttribute("javax.servlet.context.tempdir");
@@ -34,16 +36,15 @@ public class CandidatePhotoServlet extends HttpServlet {
                 folder.mkdir();
             }
             for (FileItem item : items) {
+                System.out.println(item.toString());
                 if (!item.isFormField()) {
-                    String id = req.getParameter("id");
-                    Candidate candidate = Store.instOf().findByIdCandidate(Integer.parseInt(id));
-                    candidate.setPhotoName(item.getName());
-                    File file = new File(folder + File.separator + candidate.getPhotoName());
+                    File file = new File(folder + File.separator + item.getName());
                     try (FileOutputStream out = new FileOutputStream(file)) {
                         out.write(item.getInputStream().readAllBytes());
                     }
                 }
             }
+
         } catch (FileUploadException e) {
             e.printStackTrace();
         }
