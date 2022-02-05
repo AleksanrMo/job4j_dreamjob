@@ -1,11 +1,12 @@
 package ru.store;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.model.Candidate;
 import ru.model.Post;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,10 +16,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 
+
 public class DbStore implements Store {
 
-    private static final DbStore instance = new DbStore();
-
+    private static final Logger LOG = LoggerFactory.getLogger(DbStore.class.getName());
     private final BasicDataSource pool = new BasicDataSource();
 
     private DbStore() {
@@ -67,7 +68,7 @@ public class DbStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception from method findAllPosts()", e);
         }
         return posts;
     }
@@ -83,7 +84,7 @@ public class DbStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception from method findAllCandidates()", e);
         }
         return candidates;
     }
@@ -117,7 +118,7 @@ public class DbStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception from method create() of post", e);
         }
         return post;
     }
@@ -135,7 +136,7 @@ public class DbStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception from method create() of candidate", e);
         }
         return candidate;
     }
@@ -147,7 +148,7 @@ public class DbStore implements Store {
              ps.setInt(2, post.getId());
              ps.execute();
         } catch(Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception from method update() of post", e);
         }
     }
     private void update(Candidate candidate) {
@@ -157,7 +158,7 @@ public class DbStore implements Store {
             ps.setInt(2, candidate.getId());
             ps.execute();
         } catch(Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception from method update() of candidate", e);
         }
     }
 
@@ -172,7 +173,7 @@ public class DbStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception from method findById", e);
         }
         return null;
     }
@@ -188,8 +189,31 @@ public class DbStore implements Store {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.error("Exception from method findCandidateById()", e);
         }
         return null;
+    }
+
+    public boolean deleteCandidate(int id) {
+        boolean rst = false;
+        try(PreparedStatement ps = pool.getConnection().prepareStatement("DELETE FROM candidates WHERE id = ?")) {
+            ps.setInt(1, id);
+            rst = ps.executeUpdate() > 0;
+        } catch(Exception e) {
+            LOG.error("Exception from method deleteCandidate()", e);
+        }
+        return rst;
+    }
+
+    public boolean deletePost(int id) {
+        boolean rst = false;
+        try(PreparedStatement ps = pool.getConnection().prepareStatement("DELETE FROM post WHERE id = ?")) {
+            ps.setInt(1, id);
+            ps.execute();
+            rst = ps.executeUpdate() > 0;
+        } catch(Exception e) {
+            LOG.error("Exception from method deletePost()", e);
+        }
+        return rst;
     }
 }

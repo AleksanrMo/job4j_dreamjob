@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page import="ru.store.MemStore" %>
 <%@ page import="ru.model.Post" %>
+<%@ page import="ru.store.DbStore" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -23,9 +24,9 @@
 <body>
 <%
     String id = request.getParameter("id");
-    Post post = new Post(0, "", "");
+    Post post = new Post(0, "");
     if (id != null) {
-        post = MemStore.instOf().findById(Integer.valueOf(id));
+        post = DbStore.instOf().findById(Integer.valueOf(id));
     }
 %>
 <div class="container pt-3">

@@ -1,8 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page import="ru.model.Candidate" %>
-<%@ page import="ru.store.MemStore" %>
-<%@ page import="java.util.Collection" %>
 <!doctype html>
 <html lang="en">
 <head>

@@ -1,5 +1,5 @@
 package ru.servlet;
-import ru.store.MemStore;
+import ru.store.DbStore;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,7 +15,7 @@ public class CandidateDeleteServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         String id = req.getParameter("id");
-        MemStore.instOf().deleteCandidate(Integer.parseInt(id));
+        DbStore.instOf().deleteCandidate(Integer.parseInt(id));
         File file = new File("C:\\images\\" + id + ".jpg");
         if (file.exists()) {
            Files.delete(file.toPath());
