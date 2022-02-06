@@ -1,8 +1,5 @@
 package ru.store;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.jupiter.api.Assertions;
 import ru.model.Candidate;
 import ru.model.Post;
@@ -13,7 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Properties;
 
-
+@Ignore
 public class DbStoreTest {
     static Connection connection;
 
