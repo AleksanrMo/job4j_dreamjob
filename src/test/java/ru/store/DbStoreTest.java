@@ -10,7 +10,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Properties;
 
-@Ignore
 public class DbStoreTest {
     static Connection connection;
 
