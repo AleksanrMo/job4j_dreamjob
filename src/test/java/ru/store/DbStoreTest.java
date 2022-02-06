@@ -13,6 +13,7 @@ import java.util.Properties;
 public class DbStoreTest {
     static Connection connection;
 
+
     @BeforeClass
     public static void initConnection() {
         try (InputStream in = DbStoreTest.class.getClassLoader().getResourceAsStream("db.properties")) {
