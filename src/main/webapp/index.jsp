@@ -38,6 +38,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="<%=request.getContextPath()%>/upload">Скачать файл</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp">Войти</a>
+            </li>
         </ul>
     </div>
     <div class="row">
