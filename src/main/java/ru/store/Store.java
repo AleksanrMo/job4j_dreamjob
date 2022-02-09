@@ -2,6 +2,7 @@ package ru.store;
 
 import ru.model.Candidate;
 import ru.model.Post;
+import ru.model.User;
 
 import java.util.Collection;
 
@@ -15,6 +16,10 @@ public interface Store {
 
     void save(Candidate post);
 
+    void save(User user);
+
+    User findUserByEmail(String email);
+
     Post findById(int id);
 
     Candidate findCandidateById(int id);
@@ -22,5 +27,8 @@ public interface Store {
     boolean deleteCandidate(int id);
 
     boolean deletePost(int id);
+
+
+
 
 }

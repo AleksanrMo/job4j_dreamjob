@@ -5,6 +5,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.model.Candidate;
 import ru.model.Post;
+import ru.model.User;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.sql.Connection;
@@ -104,6 +106,35 @@ public class DbStore implements Store {
         }
     }
 
+    public void save(User user) {
+        if (user.getId() == 0) {
+            create(user);
+        } else {
+            update(user);
+        }
+    }
+
+    private User create(User user) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("INSERT INTO user(name, email, passoard) VALUES (?, ?, ?)",
+                     PreparedStatement.RETURN_GENERATED_KEYS)
+        ) {
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPassword());
+            ps.execute();
+            try (ResultSet id = ps.getGeneratedKeys()) {
+                if (id.next()) {
+                    user.setId(id.getInt(1));
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Exception from method create() of post", e);
+        }
+        return user;
+    }
+
+
     private Post create(Post post) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement("INSERT INTO post(name) VALUES (?)",
@@ -155,6 +186,19 @@ public class DbStore implements Store {
              PreparedStatement ps = cn.prepareStatement("UPDATE candidates SET name = ? WHERE id = ?")) {
             ps.setString(1, candidate.getName());
             ps.setInt(2, candidate.getId());
+            ps.execute();
+        } catch(Exception e) {
+            LOG.error("Exception from method update() of candidate", e);
+        }
+    }
+
+    private void update(User user) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("UPDATE users SET (name, email, password) = (?, ?, ?) WHERE id = ?")) {
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPassword());
+            ps.setInt(4, user.getId());
             ps.execute();
         } catch(Exception e) {
             LOG.error("Exception from method update() of candidate", e);
@@ -215,4 +259,23 @@ public class DbStore implements Store {
         }
         return rst;
     }
+
+   public User findUserByEmail(String email) {
+        User user = null;
+        try(PreparedStatement ps = pool.getConnection().prepareStatement("SELECT * FROM users WHERE email like ?")) {
+            ps.setString(1, email);
+            try (ResultSet it = ps.executeQuery()) {
+                if (it.next()) {
+                    user = new User();
+                    user.setId(it.getInt("id"));
+                    user.setName(it.getString("name"));
+                    user.setEmail(it.getString("email"));
+                    user.setPassword(it.getString("password"));
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Exception from method findUserByEmail", e);
+        }
+        return user;
+   }
 }
