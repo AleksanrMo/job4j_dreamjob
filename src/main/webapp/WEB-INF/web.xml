@@ -32,8 +32,16 @@
     <servlet-name>AuthServlet</servlet-name>
     <servlet-class>ru.servlet.AuthServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>LogoutServlet</servlet-name>
+    <servlet-class>ru.servlet.LogoutServlet</servlet-class>
+  </servlet>
 
 
+  <servlet-mapping>
+    <servlet-name>LogoutServlet</servlet-name>
+    <url-pattern>/logout.do</url-pattern>
+  </servlet-mapping>
   <servlet-mapping>
     <servlet-name>PostServlet</servlet-name>
     <url-pattern>/posts.do</url-pattern>
