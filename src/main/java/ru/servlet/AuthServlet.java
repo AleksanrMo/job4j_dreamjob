@@ -15,11 +15,15 @@ import java.io.IOException;
 public class AuthServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String email = req.getParameter("email");
-        String password = req.getParameter("password");
-        User user = DbStore.instOf().findUserByEmail(email);
-        HttpSession sc = req.getSession();
-        sc.setAttribute("user", user);
-        resp.sendRedirect(req.getContextPath() + "/index.do");
+        User user = DbStore.instOf().findUserByEmail(req.getParameter("email"));
+        if (user != null && user.getPassword().equals(req.getParameter("password"))) {
+            HttpSession sc = req.getSession();
+            sc.setAttribute("user", user);
+            resp.sendRedirect(req.getContextPath() + "/index.do");
+
+        } else {
+            req.setAttribute("error", "Не верный email или пароль");
+            req.getRequestDispatcher("login.jsp").forward(req, resp);
+        }
     }
 }

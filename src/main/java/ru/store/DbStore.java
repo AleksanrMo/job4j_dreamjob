@@ -266,11 +266,8 @@ public class DbStore implements Store {
             ps.setString(1, email);
             try (ResultSet it = ps.executeQuery()) {
                 if (it.next()) {
-                    user = new User();
-                    user.setId(it.getInt("id"));
-                    user.setName(it.getString("name"));
-                    user.setEmail(it.getString("email"));
-                    user.setPassword(it.getString("password"));
+                    user = new User(it.getInt("id"), it.getString("name"), it.getString("email"),
+                            it.getString("password"));
                 }
             }
         } catch (Exception e) {

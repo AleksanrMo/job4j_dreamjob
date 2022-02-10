@@ -32,22 +32,22 @@
                 <form action="<%=request.getContextPath()%>/reg.do" method="post">
                     <div class="form-group">
                         <label>Имя</label>
-                        <input type="text" class="form-control" name="name" id="name">
+                        <input type="text" class="form-control" name="name">
                     </div>
                     <div class="form-group">
                         <label>Почта</label>
-                        <input type="text" class="form-control" name="email" id="email">
+                        <input type="text" class="form-control" name="email">
                     </div>
                     <div class="form-group">
                         <label>Пароль</label>
-                        <input type="password" class="form-control" name="password" id="password">
+                        <input type="password" class="form-control" name="password">
                     </div>
                     <button type="submit" class="btn btn-primary"onclick="return validate();">Сохранить</button>
-<%--                    <c:if test="${not empty error}">--%>
-<%--                        <div style="color:red; font-weight: bold; margin: 30px 0;">--%>
-<%--                            <c:out value="${error}"/>--%>
-<%--                        </div>--%>
-<%--                    </c:if>--%>
+                  <c:if test="${not empty error}">
+                     <div style="color:red; font-weight: bold; margin: 30px 0;">
+                          <c:out value="${error}"/>
+                    </div>
+                    </c:if>
                 </form>
             </div>
         </div>
