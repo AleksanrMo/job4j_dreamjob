@@ -46,11 +46,6 @@
                 <a href='<c:url value="/reg.jsp"/>'>
                     <button>Регистрация</button>
                 </a>
-                <c:if test="${not empty error}">
-                    <div style="color:red; font-weight: bold; margin: 30px 0;">
-                        <c:out value="${error}"/>
-                    </div>
-                </c:if>
             </div>
         </div>
     </div>
