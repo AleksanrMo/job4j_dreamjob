@@ -9,6 +9,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <script>
+
+        let incr = 0;
         function validate() {
             let name = $('#input1');
             let family = $('#input2');
@@ -25,6 +27,19 @@
         }
             return false;
          }
+        function addRow() {
+            const name = $('#input1');
+            const family = $('#input2');
+            const mail = $('#input3');
+            const description = $('#input4');
+            $('#table tr:last').after(
+                '<tr> <td>' + ++incr +'</td>'
+                + '<td>' + name.val() +'</td>'
+                +'<td>' + family.val() +'</td>'
+                +'<td>' + mail.val() +'</td>'
+                + '<td>' + description.val() +'</td></tr>');
+
+        }
     </script>
 </head>
 <body>
@@ -47,12 +62,13 @@
         </div>
         <div class="form-group">
             <label for="input4" >Описание</label>
-            <textarea class="form-control" id="input4" rows="6"></textarea>
+            <textarea class="form-control" id="input4" cols="30" rows="3"></textarea>
         </div>
         <button type="submit" class="btn btn-primary" onclick="return validate();">Submit</button>
+        <button type="button" class="btn btn-default" onclick="addRow()">Add row</button>
     </form>
 </div>
-<table class="table table-borderless">
+<table class="table table-borderless" id="table">
     <thead>
     <tr>
         <th scope="col">№</th>
@@ -63,27 +79,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <th scope="row">1</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <th scope="row">2</th>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-    <tr>
-        <th scope="row">3</th>
-        <td colspan="3"></td>
-        <td></td>
 
-
-    </tr>
     </tbody>
 </table>
 
