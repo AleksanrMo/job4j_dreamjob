@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script>
+        function validate() {
+            let name = $('#input1');
+            let family = $('#input2');
+            let mail = $('#input3');
+            let description = $('#input4');
+            if (name.val() === '') {
+                alert(name.attr('title'));
+            } else if (family.val() === '') {
+                 alert(family.attr('title'));
+            } else if (mail.val() === '') {
+                 alert(mail.attr('title'));
+            } else if (description.val() === '') {
+                alert(description.attr('title'));
+        }
+            return false;
+         }
+    </script>
+</head>
+<body>
+
+<div class="container-fluid">
+    <h1>My First Bootstrap Page</h1>
+    <p>This is some text.</p>
+    <form>
+        <div class="form-group">
+            <label for="input1">Имя</label>
+            <input type="text" class="form-control" id="input1" placeholder="Введите имя">
+        </div>
+        <div class="form-group">
+            <label for="input2">Фамилия</label>
+            <input type="text" class="form-control" id="input2" placeholder="Введите фамилию">
+        </div>
+        <div class="form-group">
+            <label for="input3">Пол</label>
+            <input type="text" class="form-control" id="input3" placeholder="Введите пол">
+        </div>
+        <div class="form-group">
+            <label for="input4" >Описание</label>
+            <textarea class="form-control" id="input4" rows="6"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" onclick="return validate();">Submit</button>
+    </form>
+</div>
+<table class="table table-borderless">
+    <thead>
+    <tr>
+        <th scope="col">№</th>
+        <th scope="col">Имя</th>
+        <th scope="col">Фамилия</th>
+        <th scope="col">Пол</th>
+        <th scope="col">Описание</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th scope="row">1</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <th scope="row">2</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <th scope="row">3</th>
+        <td colspan="3"></td>
+        <td></td>
+
+
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
