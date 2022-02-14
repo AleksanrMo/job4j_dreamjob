@@ -33,20 +33,20 @@
         }).fail(function (err) {
             console.log(err);
         });
-        $(document).ready(function () {
-            $.ajax({
-                type: 'GET',
-                url: 'http://localhost:8080/dreamjob/greet',
-                dataType: 'json'
-            }).done(function (data) {
-                for (var email of data) {
-                    $('#emailList li:last').append(`<li>${email.name}</li>`)
-                }
-            }).fail(function (err) {
-                console.log(err);
-            });
-        });
     }
+    $(document).ready(function () {
+        $.ajax({
+            type: 'GET',
+            url: 'http://localhost:8080/dreamjob/greet',
+            dataType: 'json'
+        }).done(function (data) {
+            for (var email of data) {
+                $('#emailList li:last').append(`<li>${email.name}</li>`)
+            }
+        }).fail(function (err) {
+            console.log(err);
+        });
+    });
 </script>
 <body>
 <div class="container">
