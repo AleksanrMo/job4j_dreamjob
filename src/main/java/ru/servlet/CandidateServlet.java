@@ -1,6 +1,7 @@
 package ru.servlet;
 
 import ru.model.Candidate;
+import ru.model.City;
 import ru.store.DbStore;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,7 +20,8 @@ import java.io.IOException;
         @Override
         protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
             req.setCharacterEncoding("UTF-8");
-            DbStore.instOf().save(new Candidate(Integer.valueOf(req.getParameter("id")),  req.getParameter("name")));
+            DbStore.instOf().save(new Candidate(Integer.valueOf(req.getParameter("id")),  req.getParameter("name")
+            , new City(Integer.parseInt(req.getParameter("city_id")))));
             resp.sendRedirect(req.getContextPath() + "/candidate.do");
         }
     }

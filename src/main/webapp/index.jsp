@@ -46,25 +46,65 @@
                     <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp">Войти</a>
                 </li>
             </c:if>
-
-
         </ul>
     </div>
+
     <div class="row">
         <div class="card" style="width: 100%">
             <div class="card-header">
                 Сегодняшние вакансии.
             </div>
             <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Название</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${posts}" var="post">
+                        <tr>
+                            <td><c:out value="${post.id}"/></td>
+                            <td><c:out value="${post.name}"/></td>
+                            <td><c:out value="${post.description}"/></td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
+
     <div class="row pt-3">
         <div class="card" style="width: 100%">
             <div class="card-header">
                 Сегодняшние кандидаты.
             </div>
             <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Имя</th>
+                        <th scope="col">Город</th>
+                        <th scope="col">Фото кандидата</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${candidates}" var="candidate">
+                    <tr>
+                        <td><c:out value="${candidate.id}"/></td>
+                        <td><c:out value="${candidate.name}"/></td>
+                        <td><c:out value="${candidate.city.name}"/></td>
+                        <td><img src="<c:url value='/download?name=${candidate.id}.jpg'/>" width="100px" height="100px"/>
+                        </td>
+                    </tr>
+                    <tbody>
+                    </tbody>
+                    </c:forEach>
             </div>
         </div>
     </div>

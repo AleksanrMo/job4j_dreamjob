@@ -23,7 +23,7 @@ public class PostServlet extends HttpServlet {
         DbStore.instOf().save(
                 new Post(
                         Integer.valueOf(req.getParameter("id")),
-                        req.getParameter("name"), ""
+                        req.getParameter("name"), req.getParameter("description")
                 )
         );
         resp.sendRedirect(req.getContextPath() + "/posts.do");

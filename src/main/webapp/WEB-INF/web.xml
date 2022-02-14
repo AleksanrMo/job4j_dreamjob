@@ -48,8 +48,15 @@
     <servlet-name>GreetingServlet</servlet-name>
     <servlet-class>ru.servlet.GreetingServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>CityServlet</servlet-name>
+    <servlet-class>ru.servlet.CityServlet</servlet-class>
+  </servlet>
 
-
+  <servlet-mapping>
+    <servlet-name>CityServlet</servlet-name>
+    <url-pattern>/city</url-pattern>
+  </servlet-mapping>
   <servlet-mapping>
     <servlet-name>GreetingServlet</servlet-name>
     <url-pattern>/greet</url-pattern>

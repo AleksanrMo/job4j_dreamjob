@@ -1,6 +1,7 @@
 package ru.store;
 
 import ru.model.Candidate;
+import ru.model.City;
 import ru.model.Post;
 import ru.model.User;
 
@@ -11,6 +12,8 @@ public interface Store {
     Collection<Post> findAllPosts();
 
     Collection<Candidate> findAllCandidates();
+
+    Collection<City> findAllCities();
 
     void save(Post post);
 
@@ -28,7 +31,8 @@ public interface Store {
 
     boolean deletePost(int id);
 
+    public Collection<Post> findAllPostsInDay();
 
-
+    public Collection<Candidate> findAllCandidatesInDay();
 
 }

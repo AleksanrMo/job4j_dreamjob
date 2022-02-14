@@ -25,6 +25,9 @@
     <div class="row">
         <ul class="nav">
             <li class="nav-item">
+                <a class="nav-link" href="<%=request.getContextPath()%>/index.do">На главную</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="<%=request.getContextPath()%>/posts.do">Вакансии</a>
             </li>
             <li class="nav-item">
@@ -60,10 +63,10 @@
                             </td>
                             <td>
                                 <a href='<c:url value="/candidate/PhotoUpload.jsp?id=${candidate.id}"/>'>
-                                    <button>edit</button>
+                                    <button>Добавить фото</button>
                                 </a>
                                 <a href='<c:url value="/candidate/delete?id=${candidate.id}"/>'>
-                                    <button>delete</button>
+                                    <button>Удалить кандидата</button>
                                 </a>
                             </td>
                         </tr>

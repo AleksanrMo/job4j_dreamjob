@@ -4,6 +4,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.model.Candidate;
+import ru.model.City;
 import ru.model.Post;
 import ru.model.User;
 
@@ -65,7 +66,7 @@ public class DbStore implements Store {
         ) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
-                    posts.add(new Post(it.getInt("id"), it.getString("name")));
+                    posts.add(new Post(it.getInt("id"), it.getString("name"), it.getString("description")));
                 }
             }
         } catch (Exception e) {
@@ -81,7 +82,8 @@ public class DbStore implements Store {
         ) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
-                    candidates.add(new Candidate(it.getInt("id"), it.getString("name")));
+                    candidates.add(new Candidate(it.getInt("id"), it.getString("name"),
+                            new City(Integer.parseInt(it.getString("id")), it.getString("name"))));
                 }
             }
         } catch (Exception e) {
@@ -89,6 +91,63 @@ public class DbStore implements Store {
         }
         return candidates;
     }
+
+     @Override
+      public Collection<Post> findAllPostsInDay() {
+        List<Post> posts = new ArrayList<>();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM post where create_date between now()- interval '1 DAY' and now()")
+        ) {
+            try (ResultSet it = ps.executeQuery()) {
+                while (it.next()) {
+                    posts.add(new Post(it.getInt("id"),
+                            it.getString("name"), it.getString("description")));
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Exception in findAllPosts ", e);
+        }
+        return posts;
+    }
+
+    @Override
+    public Collection<Candidate> findAllCandidatesInDay() {
+        List<Candidate> candidates = new ArrayList<>();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps = cn.prepareStatement("select candidates.id, cities.id, cities.city_name, candidates.name\n" +
+                     "                     from candidates  join cities  on candidates.city_id = cities.id \n" +
+                     "                     where create_date between now() - interval '1 DAY' and now();")
+        ) {
+            try (ResultSet it = ps.executeQuery()) {
+                while (it.next()) {
+                    candidates.add(new Candidate(it.getInt("id"),
+                            it.getString("name"),
+                            new City(Integer.parseInt(it.getString("id")), it.getString("city_name"))));
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Exception in findAllCandidatesInDay ", e);
+        }
+        return candidates;
+    }
+
+
+    public Collection<City> findAllCities() {
+        List<City> cities = new ArrayList<>();
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM cities")
+        ) {
+            try (ResultSet it = ps.executeQuery()) {
+                while (it.next()) {
+                    cities.add(new City(it.getInt("id"), it.getString("city_name")));
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Exception from method findAllCandidates()", e);
+        }
+        return cities;
+    }
+
 
     public void save(Post post) {
         if (post.getId() == 0) {
@@ -114,6 +173,29 @@ public class DbStore implements Store {
         }
     }
 
+    public void save(City city) {
+        if (city.getId() == 0) {
+            create(city);
+        }
+    }
+
+    private City create(City city) {
+        try (Connection cn = pool.getConnection();
+             PreparedStatement ps =  cn.prepareStatement("INSERT INTO cities(name) VALUES (?)",
+                     PreparedStatement.RETURN_GENERATED_KEYS)
+        ) {
+            ps.setString(1, city.getName());
+            ps.execute();
+            try (ResultSet id = ps.getGeneratedKeys()) {
+                if (id.next()) {
+                    city.setId(id.getInt(1));
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Exception from method create() of post", e);
+        }
+        return city;
+    }
     private User create(User user) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement("INSERT INTO users(name, email, password) VALUES (?, ?, ?)",
@@ -137,10 +219,11 @@ public class DbStore implements Store {
 
     private Post create(Post post) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("INSERT INTO post(name) VALUES (?)",
+             PreparedStatement ps =  cn.prepareStatement("INSERT INTO post(name, description) VALUES (?, ?)",
                      PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, post.getName());
+            ps.setString(2, post.getDescription());
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {
@@ -155,10 +238,11 @@ public class DbStore implements Store {
 
     private Candidate create(Candidate candidate) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("INSERT INTO candidates(name) VALUES (?)",
+             PreparedStatement ps =  cn.prepareStatement("INSERT INTO candidates(name, city_id) VALUES (?,?)",
                      PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, candidate.getName());
+            ps.setInt(2, candidate.getCity().getId());
             ps.execute();
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {
@@ -173,9 +257,10 @@ public class DbStore implements Store {
 
     private void update(Post post) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps = cn.prepareStatement("UPDATE post SET name = ? WHERE id = ?")) {
+             PreparedStatement ps = cn.prepareStatement("UPDATE post SET (name, description) = (?, ?) WHERE id = ?")) {
              ps.setString(1, post.getName());
-             ps.setInt(2, post.getId());
+             ps.setString(2, post.getDescription());
+             ps.setInt(3, post.getId());
              ps.execute();
         } catch(Exception e) {
             LOG.error("Exception from method update() of post", e);
@@ -212,7 +297,7 @@ public class DbStore implements Store {
             ps.setInt(1, id);
             try (ResultSet it = ps.executeQuery()) {
                 if (it.next()) {
-                    return new Post(it.getInt("id"), it.getString("name"));
+                    return new Post(it.getInt("id"), it.getString("name"), it.getString("description"));
                 }
             }
         } catch (Exception e) {
@@ -228,7 +313,9 @@ public class DbStore implements Store {
             ps.setInt(1, id);
             try (ResultSet it = ps.executeQuery()) {
                 if (it.next()) {
-                    return new Candidate(it.getInt("id"), it.getString("name"));
+                    return new Candidate(it.getInt("id"),
+                            it.getString("name"),
+                            new City(Integer.parseInt(it.getString("id")), it.getString("city_name")));
                 }
             }
         } catch (Exception e) {
