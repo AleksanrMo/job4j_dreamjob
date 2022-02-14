@@ -37,12 +37,17 @@
       <properties>
         <db.url>jdbc:postgresql://127.0.0.1:5432/dreamjob</db.url>
         <db.username>postgres</db.username>
-        <db.password>password</db.password>
+        <db.password>oracle</db.password>
         <db.driver>org.postgresql.Driver</db.driver>
       </properties>
     </profile>
   </profiles>
   <dependencies>
+    <dependency>
+      <groupId>org.jacoco</groupId>
+      <artifactId>jacoco-maven-plugin</artifactId>
+      <version>0.8.7</version>
+    </dependency>
     <dependency>
       <groupId>com.google.code.gson</groupId>
       <artifactId>gson</artifactId>
@@ -120,7 +125,7 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.6</version>
+        <version>0.8.7</version>
         <executions>
           <execution>
             <goals>
