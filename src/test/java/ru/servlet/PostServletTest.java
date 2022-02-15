@@ -2,14 +2,11 @@ package ru.servlet;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockingDetails;
 import org.mockito.Mockito;
-import org.mockito.internal.util.DefaultMockingDetails;
 import ru.model.Post;
 import ru.store.DbStore;
 import ru.store.Store;
 import static org.mockito.Mockito.*;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -43,6 +40,6 @@ class PostServletTest {
         RequestDispatcher dispatcher = Mockito.mock(RequestDispatcher.class);
         Mockito.when(req.getRequestDispatcher("posts.jsp")).thenReturn(dispatcher);
         new PostServlet().doGet(req, resp);
-        req.getRequestDispatcher("posts.jsp");
+        verify(req).getRequestDispatcher("posts.jsp");
     }
 }
